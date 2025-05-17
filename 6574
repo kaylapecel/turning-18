@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title> 🛒⚽️⭐️⛸️ </title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Fredoka', sans-serif;
+      text-align: center;
+      background: url('background2.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #f0f0f0;
+      padding-top: 50px;
+      text-shadow: 0 0 5px rgba(0,0,0,0.7);
+    }
+
+    h1 {
+      font-size: 6vw;
+      color: #e6c1ec;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      font-size: 1rem;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      color: #f0f0f0;
+      padding: 0 20px;
+      margin-top: 40px;
+    }
+
+    #countdown {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin: 20px auto;
+      max-width: 90%;
+    }
+
+    #countdown div {
+      background: white;
+      padding: 15px 20px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+      min-width: 80px;
+      flex: 1 1 80px;
+      color: white;
+    }
+
+    #countdown span {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    #countdown small {
+      display: block;
+      font-size: 0.75rem;
+      color: white;
+      margin-top: 5px;
+    }
+
+    #message {
+      margin-top: 40px;
+      font-size: 2rem;
+      color: #76ff03;
+    }
+
+    /* Tombol Musik Oval */
+    #playMusicBtn {
+      padding: 12px 30px;
+      border: none;
+      border-radius: 50px;
+      background-color: #eda8bf;
+      color: white;
+      font-size: 1.2rem;
+      font-family: 'Fredoka', sans-serif;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: background-color 0.3s ease;
+      margin-top: 30px;
+    }
+
+    #playMusicBtn:hover {
+      background-color: #eda8bf;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 8vw;
+      }
+
+      h2 {
+        font-size: 0.95rem;
+      }
+
+      #countdown div {
+        padding: 10px 12px;
+        min-width: 70px;
+      }
+
+      #countdown span {
+        font-size: 1.5rem;
+      }
+
+      #message {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>turning 18</h1>
+  <div id="countdown">
+    <div><span id="days">0</span><small>days</small></div>
+    <div><span id="hours">0</span><small>hours</small></div>
+    <div><span id="minutes">0</span><small>minutes</small></div>
+    <div><span id="seconds">0</span><small>seconds</small></div>
+  </div>
+  <div id="message"></div>
+
+  <!-- Tombol Musik Oval -->
+  <button id="playMusicBtn" onclick="startMusic()">play me</button>
+
+  <!-- Musik Latar & Surprise -->
+  <audio id="bg-music" loop>
+    <source src="birthday.mp3" type="audio/mpeg">
+    Your browser does not support the audio tag.
+  </audio>
+
+
+  <script>
+    const birthday = new Date("2025-07-03T00:00:00").getTime();
+    const surpriseMusic = document.getElementById("surprise-music");
+    const message = document.getElementById("message");
+    const playMusicBtn = document.getElementById("playMusicBtn");
+    const bgMusic = document.getElementById("bg-music");
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = birthday - now;
+
+      if (distance <= 0) {
+        document.getElementById("countdown").style.display = "none";
+        message.innerHTML = "🎉 Happy Birthday! 🎶";
+        surpriseMusic.play();
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((distance / (1000 * 60)) % 60);
+      const seconds = Math.floor((distance / 1000) % 60);
+
+      document.getElementById("days").innerText = days;
+      document.getElementById("hours").innerText = hours;
+      document.getElementById("minutes").innerText = minutes;
+      document.getElementById("seconds").innerText = seconds;
+    }
+
+    function startMusic() {
+      bgMusic.play().then(() => {
+        playMusicBtn.style.display = "none"; // sembunyikan tombol setelah klik
+      }).catch(error => {
+        alert("Autoplay gagal. Silakan klik ulang untuk memutar musik.");
+        console.error(error);
+      });
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+</body>
+</html>
